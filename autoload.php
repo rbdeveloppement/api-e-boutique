@@ -5,7 +5,7 @@ class AutoLoader {
   public static function register() {
     spl_autoload_register(function ($class) {
       $search = ['Controller', 'Service', 'Config'];
-      $replace = ['.controller', '.service', '.Config'];
+      $replace = ['.controller', '.service', '.config'];
       
       $file = strtolower(str_replace($search, $replace, $class) . '.php');
       
