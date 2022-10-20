@@ -2,7 +2,7 @@
 
 class DataBaseController {
 
- public function FunctionName($resquest)
+ public function __construct($request)
     {
       
     }
