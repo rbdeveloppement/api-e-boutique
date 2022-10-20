@@ -15,8 +15,6 @@ use Services\DatabaseService;
 
 $request = HttpRequest::instance();
 
-// HttpResponse::send(['method'=>$request->method, 'route'=>$request->route]);
-
 $tables = DatabaseService::getTables();
 
 $controller = new DatabaseController($request);
