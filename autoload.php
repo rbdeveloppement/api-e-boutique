@@ -7,7 +7,7 @@ class AutoLoader {
       $pattern = ['/Controller\b/', '/Service\b/', '/Config\b/'];
       $replace = ['.controller', '.service', '.config'];
       
-      $file = preg_replace($pattern, $replace, $class) . '.php';
+      $file = 'src/' . preg_replace($pattern, $replace, $class) . '.php';
       
       if(file_exists($file)){
         return require_once $file;

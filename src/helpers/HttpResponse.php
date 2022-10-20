@@ -1,4 +1,4 @@
-<?php namespace Helpders;
+<?php namespace Helpers;
 
 class HttpResponse {
   
@@ -12,7 +12,8 @@ class HttpResponse {
     http_response_code($status);
     
     if($status >= 300){
-      return exit($status);
+      exit($status);
+      return;
     }
     
     echo json_encode($data);
