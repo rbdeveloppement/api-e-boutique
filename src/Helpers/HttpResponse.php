@@ -1,6 +1,4 @@
-<?php
-
-namespace Helpers;
+<?php namespace Helpers;
 
 class HttpResponse
 {

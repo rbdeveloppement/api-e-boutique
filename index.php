@@ -15,9 +15,11 @@ use Helpers\HttpRequest;
 use Helpers\HttpResponse;
 use Services\DatabaseService;
 
+
 $request = HttpRequest::instance();
 $tables = DatabaseService::getTables();
-if(){
+if(empty($request->route) || in_array($request->route[0], $tables)){
+    HttpResponse::exit();
 
 }
 HttpResponse::send(["method"=>$request->method, "route"=>$request->route]);
