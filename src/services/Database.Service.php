@@ -45,9 +45,9 @@ class DatabaseService
     }
     public function query(string $sql, array $params = []): object
     {
-        $statment = $this->connect()->prepare($sql);
-        $result = $statment->execute($params);
-        return (object)['result' => $result, 'statment' => $statment];
+        $statement = $this->connect()->prepare($sql);
+        $result = $statement->execute($params);
+        return (object)['result' => $result, 'statement' => $statement];
     }
     /**
      * Retourne la liste des tables en base de données sous forme de tableau
@@ -59,6 +59,6 @@ class DatabaseService
                                      WHERE table_schema = ?", ['e-boutique']);
         $rows = $query_resp->statement->fetchAll(PDO::FETCH_COLUMN);
         $bp=true;
-        return null;
+        return $rows;
     }
 }

@@ -10,7 +10,7 @@ require_once 'autoload.php';
 // $data="OK";
 // // HttpResponse::send(["data"=>$data]);
 
-// use Controllers\DatabaseController;
+use Controllers\DatabaseController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
 use Services\DatabaseService;
@@ -18,7 +18,7 @@ use Services\DatabaseService;
 
 $request = HttpRequest::instance();
 $tables = DatabaseService::getTables();
-if(empty($request->route) || in_array($request->route[0], $tables)){
+if(empty($request->route) || !in_array($request->route[0], $tables)){
     HttpResponse::exit();
 
 }
