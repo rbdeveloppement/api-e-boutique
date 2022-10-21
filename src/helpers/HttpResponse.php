@@ -17,6 +17,8 @@ class HttpResponse {
     }
     
     echo json_encode($data);
+    
+    die;
   }
   
   /**
