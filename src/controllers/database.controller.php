@@ -16,12 +16,29 @@ class DatabaseController {
     
     $this->table = $request->route[0];
     $this->pk = "Id_" . $this->table;
-    $this->id = 
-    $this->body =
-    $this->action =
+    $this->id = isset($request-> route[1]) ?$request-> route[1] : null;
 
+    $request_body = file_get_contents('php://input');
+    $this->body = json_decode($request_body, true) ?: [];
+
+    $this->action = $request->method;
   }
   
+public function execute() : ?array
+{
+ $result = self::get();
+  return $result
+ // return $this->($this->action)();
+  
+;}
+  
+private function get() :?array
+{
+
+  $dbs = new DatabaseService($this->table);
+  $data = $dbs->selectWhere("$this->pk = ?", [$this->id]);
+  return $data;
+}
 }
 
 ?>

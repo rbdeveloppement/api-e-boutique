@@ -7,9 +7,9 @@ use PDOException;
 
 class DatabaseService
 {
-    public string $table;
+    public ?string $table;
     public string $pk;
-    public function _construct(string $table = null)
+    public function __construct(?string $table = null)
     {
         $this->table = $table;
         $this->pk = "Id_" . $this->table;
@@ -67,7 +67,7 @@ class DatabaseService
     {
         $sql = "SELECT * FROM $this->table WHERE $where;";
         $resp = $this->query($sql, $bind);
-        $rows = $resp->statment->fetchAll(PDO::FETCH_CLASS);
+        $rows = $resp->statement->fetchAll(PDO::FETCH_CLASS);
         return $rows;
     }
 }
