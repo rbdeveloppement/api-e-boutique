@@ -16,8 +16,6 @@ class HttpRequest {
   }
   
   public static function instance() : HttpRequest {
-    echo self::$instance;
-    
     if(!isset(self::$instance))
       self::$instance = new HttpRequest();
     

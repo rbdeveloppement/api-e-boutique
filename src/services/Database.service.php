@@ -7,10 +7,10 @@ class DatabaseService {
   
   private static ?PDO $connection = null;
   
-  public string $table;
+  public ?string $table;
   public string $pk;
   
-  public function __construct(string $table = null){
+  public function __construct(?string $table = null){
     $this->table = $table;
     $this->pk = "Id_$this->table";
   }
@@ -50,10 +50,18 @@ class DatabaseService {
     return (object)['result'=>$result, "statement"=>$statement];
   }
   
-  public static function getTables() : array {
-    $dbs = new DatabaseService('');
+  public function selectWhere(string $where = "1", array $bind = []) : array {
+    $sql = "SELECT * FROM $this->table WHERE $where;";
+    $resp = $this->query($sql, $bind);
+    $rows = $resp->statement->fetchAll(PDO::FETCH_CLASS);
     
-    $response = $dbs->query('SELECT table_name FROM information_schema.tables WHERE table_schema=?', ['e-boutique']);
+    return $rows;
+  }
+  
+  public static function getTables() : array {
+    $dbs = new DatabaseService();
+    
+    $response = $dbs->query('SELECT table_name FROM information_schema.tables WHERE table_schema=?', $_ENV['db']);
     $rows = $response->statement->fetchAll(PDO::FETCH_COLUMN);
     
     return $rows;
