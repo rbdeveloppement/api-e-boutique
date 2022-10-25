@@ -1,6 +1,7 @@
 <?php namespace Tools;
 
 use Exception;
+use ErrorException;
 use Helpers\HttpRequestHelper;
 use Services\DatabaseService;
 
@@ -23,7 +24,7 @@ class InitializerTool {
     
     if(file_exists($tableFile) && $isForce){
       if (!unlink($tableFile)) {
-        throw new Exception("Wasn't able to delete file '$tableFile'.");
+        throw new ErrorException("Wasn't able to delete file '$tableFile'.");
       }
     }
     
@@ -31,12 +32,14 @@ class InitializerTool {
       $file_content = "<?php namespace Schemas;\n\nclass TableSchema {\n\n";
       
       foreach($tables as $table){
-        $file_content .= "\tconst " . strtoupper($table) . " = '" . $table . "';\n";
+        $file_content .= "\tconst " . strtoupper($table) . " = '$table';\n";
       }
       
       $file_content .= "\n}\n\n?>";
       
-      file_put_contents($tableFile, $file_content);
+      if(!file_put_contents($tableFile, $file_content)){
+        throw new ErrorException("File couldn't be created!");
+      };
     }
     
     return $tables;

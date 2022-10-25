@@ -18,7 +18,7 @@ $tables = DatabaseService::getTables();
 
 if($_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] == 'init'){
   if(InitializerTool::start($request)){
-    HttpResponseHelper::send(['message'=>'Api Initialized']);
+    HttpResponseHelper::send(['message'=> 'Api Initialized']);
   }
   HttpResponseHelper::send(['message'=>'Api Not Initialized, try again...']);
 }
