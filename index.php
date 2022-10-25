@@ -41,4 +41,6 @@ if($result){
   HttpResponseHelper::send(['data'=>$result]);
 }
 
+HttpResponseHelper::exit();
+
 ?>
