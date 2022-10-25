@@ -58,7 +58,7 @@ class DatabaseService
         $query_resp = $dbs->query("SELECT table_name FROM information_schema.tables
                                      WHERE table_schema = ?", ['e-boutique']);
         $rows = $query_resp->statement->fetchAll(PDO::FETCH_COLUMN);
-        $bp=true;
+        // $bp=true;  //point d'arret pour les tests
         return $rows;
     }
 

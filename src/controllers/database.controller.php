@@ -36,7 +36,7 @@ private function get() :?array
 {
 
   $dbs = new DatabaseService($this->table);
-  $data = $dbs->selectWhere("$this->pk = ?", [$this->id]);
+  $data = $dbs->selectWhere(is_null($this->id) ?: "$this->pk = ?", [$this->id]);
   return $data;
 }
 }
