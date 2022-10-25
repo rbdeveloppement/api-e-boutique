@@ -3,17 +3,34 @@
 use Services\DatabaseService;
 use Helpers\HttpRequest;
 use Exception;
+use ErrorException;
 
 class Initializer{
 
     
-
+public static function start (HttpRequest $request) : bool
+{
+    
+    $isForce = count($request->route) > 1 && $request->routes[1] == 'force';
+    try{
+        self:writeTableFile($isForce);
+    }
+    catch(Exception $e){
+        return false;
+    }
+    return true;
+}
     public static function writeTableFile(bool $isForce = false) : array
     {
         $tables = DatabaseService::getTables();
         $tableFile = "src/Schemas/Tables.php";
+        
         if(file_exists($tableFile) && $isForce){
-            unlink($tableFile);
+
+           if(!unlink($tableFile)){
+            throw new Exception("le fichier n'est pas supprimé");
+           }
+           
         }
         if(!file_exists($tableFile)){
             $fileContent="<?php namespace Schemas ;\r\n\r\n";      // \r\n   fait un retour à la ligne
