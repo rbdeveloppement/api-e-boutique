@@ -12,7 +12,7 @@ class DatabaseService
     public function _construct(string $table = null)
     {
         $this->table = $table;
-        $this->pk = "id_" . $this->table;
+        $this->pk = "Id_" . $this->table;
     }
     private static ?PDO $connection = null;
     private function connect(): PDO
@@ -61,4 +61,14 @@ class DatabaseService
         $bp=true;
         return $rows;
     }
+
+ 
+
+public function selectWhere(string $where = "1", array $bind = []) : array
+{
+    $sql = "SELECT * FROM $this->table WHERE $where;";
+    $resp = $this->query($sql, $bind);
+    $rows = $resp->statement->fetchAll(PDO::FETCH_CLASS);
+    return $rows;
+}
 }
