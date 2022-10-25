@@ -1,6 +1,6 @@
 <?php namespace Helpers;
 
-class HttpResponse {
+class HttpResponseHelper {
   
   /**
    * Cette méthode fixe le status code de la réponse HTTP,

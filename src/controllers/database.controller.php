@@ -1,6 +1,6 @@
 <?php namespace Controllers;
 
-use Helpers\HttpRequest;
+use Helpers\HttpRequestHelper;
 use Services\DatabaseService;
 
 class DatabaseController {
@@ -11,7 +11,7 @@ class DatabaseController {
   private array $body;
   private string $action;
   
-  public function __construct(HttpRequest $request) {
+  public function __construct(HttpRequestHelper $request) {
     $this->table = $request->route[0];
     $this->pk = "Id_$this->table";
     

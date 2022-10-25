@@ -61,7 +61,7 @@ class DatabaseService {
   public static function getTables() : array {
     $dbs = new DatabaseService();
     
-    $response = $dbs->query('SELECT table_name FROM information_schema.tables WHERE table_schema=?', $_ENV['db']);
+    $response = $dbs->query('SELECT table_name FROM information_schema.tables WHERE table_schema=?', [$_ENV['db']['dbName']]);
     $rows = $response->statement->fetchAll(PDO::FETCH_COLUMN);
     
     return $rows;

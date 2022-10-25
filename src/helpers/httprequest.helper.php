@@ -1,6 +1,6 @@
 <?php namespace Helpers;
 
-class HttpRequest {
+class HttpRequestHelper {
   
   private static $instance;
   
@@ -15,9 +15,9 @@ class HttpRequest {
     $this->route = explode('/', $filteredUrl);
   }
   
-  public static function instance() : HttpRequest {
+  public static function instance() : HttpRequestHelper {
     if(!isset(self::$instance))
-      self::$instance = new HttpRequest();
+      self::$instance = new HttpRequestHelper();
     
     return self::$instance;
   }

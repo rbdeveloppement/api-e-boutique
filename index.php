@@ -1,28 +1,44 @@
 <?php
 
-$env = 'dev';
-$test = file_get_contents('src/configs/' . $env . '.config.json');
+use Tools\InitializerTool;
 
+$env = 'dev';
 $_ENV = json_decode(file_get_contents('src/configs/' . $env . '.config.json'), true);
 $_ENV['env'] = $env;
 
 require_once 'autoload.php';
 
 use Controllers\DatabaseController;
-use Helpers\HttpRequest;
-use Helpers\HttpResponse;
+use Helpers\HttpRequestHelper;
+use Helpers\HttpResponseHelper;
 use Services\DatabaseService;
 
-$request = HttpRequest::instance();
+$request = HttpRequestHelper::instance();
 $tables = DatabaseService::getTables();
 
-if(empty($request->route) || !in_array($request->route[0], $tables)){
-  HttpResponse::exit();
+if($_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] == 'init'){
+  if(InitializerTool::start($request)){
+    HttpResponseHelper::send(['message'=>'Api Initialized']);
+  }
+  HttpResponseHelper::send(['message'=>'Api Not Initialized, try again...']);
+}
+
+if(!empty($request->route)){
+  $const = strtoupper($request->route[0]);
+  $key = "Schemas\TableSchema::$const";
+  
+  if(!defined($key)){
+    HttpResponseHelper::exit();
+  }
+} else {
+  HttpResponseHelper::exit();
 }
 
 $controller = new DatabaseController($request);
 $result = $controller->execute();
 
-HttpResponse::send(["data"=>$result]);
+if($result){
+  HttpResponseHelper::send(['data'=>$result]);
+}
 
 ?>
