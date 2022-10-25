@@ -67,6 +67,16 @@ class DatabaseService {
     return $rows;
   }
   
+  public function getSchema(){
+    $schema = [];
+    $sql = "SHOW FULL COLUMNS FROM $this->table";
+    
+    $response = $this->query($sql);
+    $schema = $response->statement->fetchAll(PDO::FETCH_CLASS);
+    
+    return $schema;
+  }
+  
 }
 
 ?>
