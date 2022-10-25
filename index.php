@@ -14,7 +14,7 @@ use Controllers\DatabaseController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
 use Services\DatabaseService;
-
+use Tools\Initializer;
 
 $request = HttpRequest::instance();
 $tables = DatabaseService::getTables();
@@ -22,6 +22,7 @@ if(empty($request->route) || !in_array($request->route[0], $tables)){
     HttpResponse::exit();
 
 }
+Initializer::writeTableFile(true);
 // $controller = new DatabaseController($request);
 // $result = $controller->execute();
 // HttpResponse::send(["method"=>$request->method, "route"=>$request->route]);

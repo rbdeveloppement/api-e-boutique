@@ -12,6 +12,10 @@ class AutoLoader {
       if(file_exists($file)){
         return require_once $file;
       }
+      $toolsPath = lcfirst($class).".php";    
+      if(file_exists($toolsPath)){
+        return require_once $toolsPath;
+      }
       
       return false;
     });
