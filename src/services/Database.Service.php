@@ -7,12 +7,12 @@ use PDOException;
 
 class DatabaseService
 {
-    public string $table;
+    public ?string $table;
     public string $pk;
-    public function _construct(string $table = null)
+    public function __construct(?string $table = null)
     {
         $this->table = $table;
-        $this->pk = "id_" . $this->table;
+        $this->pk = "Id_" . $this->table;
     }
     private static ?PDO $connection = null;
     private function connect(): PDO
@@ -62,22 +62,21 @@ class DatabaseService
         return $rows;
     }
 
+
+    public function selectWhere(string $where = "1", array $bind = []) : array
+    {
+        $sql = "SELECT * FROM $this->table WHERE $where;";
+        $resp = $this->query($sql, $bind);
+        $rows = $resp->statement->fetchAll(PDO::FETCH_CLASS);   //FETCH_CLASS donne un objet
+        return $rows;
+    }
+
     public function getSchema(){
+        
         $schemas = [];
         $sql = "SHOW FULL COLUMNS FROM $this->table";
-
-
-
-    //    if(!result){
-    //     echo 'Impossible d\'exécuter la requête : ' . mysql_error();
-    //     exit;
-    //  }
-    //  if (mysql_num_rows($result) > 0) {
-    //     while ($row = mysql_fetch_assoc($result)) {
-    //        print_r($row);
-    //     }
-    //    }
-         
+        $query_resp_column = $this->query($sql);
+        $schemas = $query_resp_column->statement->fetchAll(PDO::FETCH_ASSOC);    //FETCH_ASSOC donne une liste[]
 
         return $schemas;
     }
