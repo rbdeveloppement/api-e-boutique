@@ -61,4 +61,24 @@ class DatabaseService
         $bp=true;
         return $rows;
     }
+
+    public function getSchema(){
+        $schemas = [];
+        $sql = "SHOW FULL COLUMNS FROM $this->table";
+
+
+
+    //    if(!result){
+    //     echo 'Impossible d\'exécuter la requête : ' . mysql_error();
+    //     exit;
+    //  }
+    //  if (mysql_num_rows($result) > 0) {
+    //     while ($row = mysql_fetch_assoc($result)) {
+    //        print_r($row);
+    //     }
+    //    }
+         
+
+        return $schemas;
+    }
 }
