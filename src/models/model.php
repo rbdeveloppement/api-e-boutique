@@ -40,9 +40,9 @@ class Model {
   public function nextGuid(int $length = 16): string {
     $guid = "";
     
-    for($i = 0; $i < ceil($length / 10); $i++){
-      $cleanNumber = preg_replace( '/[^0-9]/', '', microtime());
-      $guid .= base_convert($cleanNumber, 10, 32);
+    while(strlen($guid) < $length){
+      $t = preg_replace( '/[^0-9]/', '', microtime());
+      $guid .= base_convert($t, 10, 32);
     }
     
     return substr($guid, 0, $length);
