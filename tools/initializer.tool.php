@@ -61,7 +61,7 @@ class InitializerTool {
         $dbs = new DatabaseService($table);
         $schemas = $dbs->getSchema();
         
-        $data = "<?php namespace Schemas;\n\nclass " . $table . "Schema {\n\n\tconst COLUMNS = [\n";
+        $data = "<?php namespace Schemas;\n\nclass " . ucfirst($table) . "Schema {\n\n\tconst COLUMNS = [\n";
           
         foreach($schemas as $schema){
           $nullableBool = $schema->Null != 'NO';

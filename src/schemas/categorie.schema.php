@@ -1,6 +1,6 @@
 <?php namespace Schemas;
 
-class categorieSchema {
+class CategorieSchema {
 
 	const COLUMNS = [
 		'Id_categorie' => ['type'=>'varchar(255)', 'nullable'=>'', 'default'=>''],

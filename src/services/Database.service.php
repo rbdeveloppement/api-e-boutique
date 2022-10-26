@@ -1,5 +1,6 @@
 <?php namespace Services;
 
+use Helpers\HttpResponseHelper;
 use PDO;
 use PDOException;
 
@@ -67,8 +68,8 @@ class DatabaseService {
     return $rows;
   }
   
-  public function getSchema() : object {
-    $schema = (object)[];
+  public function getSchema() : array {
+    $schema = [];
     $sql = "SHOW FULL COLUMNS FROM $this->table";
     
     $response = $this->query($sql);

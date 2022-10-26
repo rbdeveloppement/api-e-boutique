@@ -1,6 +1,6 @@
 <?php namespace Schemas;
 
-class paiementSchema {
+class PaiementSchema {
 
 	const COLUMNS = [
 		'Id_paiement' => ['type'=>'varchar(255)', 'nullable'=>'', 'default'=>''],

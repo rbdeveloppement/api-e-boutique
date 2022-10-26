@@ -1,6 +1,6 @@
 <?php namespace Schemas;
 
-class compte_clientSchema {
+class Compte_clientSchema {
 
 	const COLUMNS = [
 		'Id_compte_client' => ['type'=>'varchar(255)', 'nullable'=>'', 'default'=>''],

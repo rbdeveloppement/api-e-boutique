@@ -1,6 +1,6 @@
 <?php namespace Schemas;
 
-class listeSchema {
+class ListeSchema {
 
 	const COLUMNS = [
 		'Id_produit' => ['type'=>'varchar(255)', 'nullable'=>'', 'default'=>''],

@@ -1,6 +1,6 @@
 <?php namespace Schemas;
 
-class commandeSchema {
+class CommandeSchema {
 
 	const COLUMNS = [
 		'Id_commande' => ['type'=>'int(11)', 'nullable'=>'', 'default'=>''],

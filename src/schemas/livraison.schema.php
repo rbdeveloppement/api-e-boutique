@@ -1,6 +1,6 @@
 <?php namespace Schemas;
 
-class livraisonSchema {
+class LivraisonSchema {
 
 	const COLUMNS = [
 		'Id_livraison' => ['type'=>'varchar(255)', 'nullable'=>'', 'default'=>''],

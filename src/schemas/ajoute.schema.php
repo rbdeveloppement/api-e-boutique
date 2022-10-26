@@ -1,8 +1,9 @@
 <?php namespace Schemas;
 
-class FavorisSchema {
+class AjouteSchema {
 
 	const COLUMNS = [
+		'Id_client' => ['type'=>'varchar(255)', 'nullable'=>'', 'default'=>''],
 		'Id_favoris' => ['type'=>'varchar(255)', 'nullable'=>'', 'default'=>''],
 	];
 

@@ -1,6 +1,6 @@
 <?php namespace Schemas;
 
-class roleSchema {
+class RoleSchema {
 
 	const COLUMNS = [
 		'Id_role' => ['type'=>'varchar(255)', 'nullable'=>'', 'default'=>''],

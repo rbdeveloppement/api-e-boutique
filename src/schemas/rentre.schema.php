@@ -1,6 +1,6 @@
 <?php namespace Schemas;
 
-class rentreSchema {
+class RentreSchema {
 
 	const COLUMNS = [
 		'Id_produit' => ['type'=>'varchar(255)', 'nullable'=>'', 'default'=>''],
