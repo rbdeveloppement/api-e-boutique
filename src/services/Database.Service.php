@@ -67,7 +67,17 @@ class DatabaseService
     {
         $sql = "SELECT * FROM $this->table WHERE $where;";
         $resp = $this->query($sql, $bind);
-        $rows = $resp->statement->fetchAll(PDO::FETCH_CLASS);
+        $rows = $resp->statement->fetchAll(PDO::FETCH_CLASS);   //FETCH_CLASS donne un objet
         return $rows;
+    }
+
+    public function getSchema(){
+        
+        $schemas = [];
+        $sql = "SHOW FULL COLUMNS FROM $this->table";
+        $query_resp_column = $this->query($sql);
+        $schemas = $query_resp_column->statement->fetchAll(PDO::FETCH_ASSOC);    //FETCH_ASSOC donne une liste[]
+
+        return $schemas;
     }
 }
