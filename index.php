@@ -37,10 +37,6 @@ if(!empty($request->route)){
 $controller = new DatabaseController($request);
 $result = $controller->execute();
 
-if($result){
-  HttpResponseHelper::send(['data'=>$result]);
-}
-
-HttpResponseHelper::exit();
+HttpResponseHelper::send(['data'=>$result]);
 
 ?>

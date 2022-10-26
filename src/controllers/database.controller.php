@@ -26,7 +26,7 @@ class DatabaseController {
     return $this->{$this->action}();
   }
   
-  public function get() : ?array {
+  public function get() : ?mixed {
     $dbs = new DatabaseService($this->table);
     
     $resp = $dbs->selectWhere(is_null($this->id) ?: "$this->pk=?", [$this->id]);

@@ -67,8 +67,8 @@ class DatabaseService {
     return $rows;
   }
   
-  public function getSchema(){
-    $schema = [];
+  public function getSchema() : object {
+    $schema = (object)[];
     $sql = "SHOW FULL COLUMNS FROM $this->table";
     
     $response = $this->query($sql);
