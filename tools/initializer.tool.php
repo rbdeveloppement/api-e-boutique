@@ -67,12 +67,6 @@ class InitializerTool {
           $nullableBool = $schema->Null != 'NO';
           $data .= "\t\t'$schema->Field' => ['type'=>'$schema->Type', 'nullable'=>'$nullableBool', 'default'=>'$schema->Default'],\n";
         }
-          
-        // => [
-        //   'type'=>'$schema->Type',
-        //   'nullable'=>'" . $schema->Null == 'NO' ? 0 : 1 . "',
-        //   'default'=>'$schema->Default'
-        // ],\n
         
         $data .= "\t];\n\n}\n\n?>";
         
