@@ -2,7 +2,7 @@
 
 class Model {
   
-  public string $tabme;
+  public string $table;
   public string $pk;
   public array $schema;
   
@@ -41,8 +41,8 @@ class Model {
     $guid = "";
     
     while(strlen($guid) < $length){
-      $t = preg_replace( '/[^0-9]/', '', microtime());
-      $guid .= base_convert($t, 10, 32);
+      $num = preg_replace( '/[^0-9]/', '', microtime());
+      $guid .= base_convert($num, 10, 32);
     }
     
     return substr($guid, 0, $length);
