@@ -41,7 +41,7 @@ class Model {
     $guid = "";
     
     while(strlen($guid) < $length){
-      $num = preg_replace( '/[^0-9]/', '', microtime());
+      $num = preg_replace('/[^0-9]/', '', microtime());
       $guid .= base_convert($num, 10, 32);
     }
     
