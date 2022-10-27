@@ -38,11 +38,10 @@ class Model {
   }
   
   public function nextGuid(int $length = 16): string {
-    $guid = "";
+    $guid = base_convert(microtime(true) * 10000, 10, 32);
     
     while(strlen($guid) < $length){
-      $num = preg_replace('/[^0-9]/', '', microtime());
-      $guid .= base_convert($num, 10, 32);
+      $guid .= base_convert(rand(0, 32), 10, 32);
     }
     
     return substr($guid, 0, $length);
