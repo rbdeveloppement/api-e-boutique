@@ -6,22 +6,22 @@ class ModelList {
   
   public string $string;
   public string $pk;
-  public array $item;
+  public array $items;
   
   public function __construct(string $table, array $list){
     $this->table = $table;
     $this->pk = "Id_$this->table";
-    $this->item = [];
+    $this->items = [];
     
     foreach($list as $json){
-      array_push($this->item, new Model($table, $json));
+      array_push($this->items, new Model($table, $json));
     }
   }
   
   public function data(): array {
     $data = [];
     
-    foreach($this->item as $dt){
+    foreach($this->items as $dt){
       array_push($data, $dt->data());
     }
     
@@ -34,9 +34,9 @@ class ModelList {
     }
     
     $list = [];
-    foreach($this->item as $itm){
-      if(isset($itm[$key])){
-        array_push($list, $itm[$key]);
+    foreach($this->items as $itm){
+      if(isset($itm->$key)){
+        array_push($list, $itm->$key);
       }
     }
     
@@ -44,7 +44,7 @@ class ModelList {
   }
   
   public function findById($id): ?Model {
-    foreach($this->item as $model){
+    foreach($this->items as $model){
       if(isset($model[$model->pk]) && $model[$model->pk] == $id){
         return $model;
       }

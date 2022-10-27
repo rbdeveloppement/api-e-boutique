@@ -1,6 +1,7 @@
 <?php namespace Services;
 
 use Helpers\HttpResponseHelper;
+use Models\ModelList;
 use PDO;
 use PDOException;
 
@@ -44,19 +45,69 @@ class DatabaseService {
     return self::$connection;
   }
   
-  public function query(string $sql, array $params = []) : object {
+  public function query(string $sql, array $params = []): object {
     $statement = $this->connect()->prepare($sql);
     $result = $statement->execute($params);
     
     return (object)['result'=>$result, "statement"=>$statement];
   }
   
-  public function selectWhere(string $where = "1", array $bind = []) : array {
+  public function selectWhere(string $where = "1", array $bind = [], int $fetch_type = PDO::FETCH_CLASS): array {
     $sql = "SELECT * FROM $this->table WHERE $where;";
     $resp = $this->query($sql, $bind);
-    $rows = $resp->statement->fetchAll(PDO::FETCH_CLASS);
+    $rows = $resp->statement->fetchAll($fetch_type);
     
     return $rows;
+  }
+  
+  public function insertOrUpdate(array $body): ?array {
+    $modelList = new ModelList($this->table, $body['items']);
+    
+    $existingRowsListId = $modelList->idList();
+    
+    $where = "$this->pk IN (";
+    foreach($existingRowsListId as $id){
+        $where .= "?, ";
+    }
+    $where = substr($where, 0, -2) . ")";
+    
+    $rows = $this->selectWhere($where, $existingRowsListId, PDO::FETCH_ASSOC);
+    
+    $existingModelList = new Modellist($this->table, $rows);
+    
+    $columns = "";
+    $values = "";
+    $valuesToBind = [];
+    
+    foreach($modelList->data() as $data){
+        $values .= "(";
+        
+        if(empty($columns)){
+            $columns .= "(";
+            foreach(array_keys($data) as $key){
+                $columns .= "$key, ";
+            }
+            $columns = substr($columns, 0, -2) . "), ";
+        }
+        
+        foreach($data as $k => $v){
+            $values .= "?, ";
+            array_push($valuesToBind, $v);
+        }
+        $values = substr($values, 0, -2) . "), ";
+    }
+    
+    $columns = substr($columns, 0, -2);
+    $values = substr($values, 0, -2);
+    
+    $sql = "INSERT INTO $this->table $columns VALUES $values ON DUPLICATE KEY UPDATE $this->pk=$this->pk;";
+    
+    $resp = $this->query($sql, $valuesToBind);
+    if($resp->result){
+        return $resp->statement->fetchAll(PDO::FETCH_CLASS);
+    }
+    
+    return null;
   }
   
   public static function getTables() : array {

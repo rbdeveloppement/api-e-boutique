@@ -26,12 +26,19 @@ class DatabaseController {
     return $this->{$this->action}();
   }
   
-  public function get() : ?array {
+  public function get(): ?array {
     $dbs = new DatabaseService($this->table);
     
     $resp = $dbs->selectWhere(is_null($this->id) ?: "$this->pk=?", [$this->id]);
     
     return $resp;
+  }
+  
+  public function put(): ?array {
+    $dbs = new DatabaseService($this->table);
+    $rows = $dbs->insertOrUpdate($this->body);
+    
+    return $rows;
   }
   
 }
