@@ -14,8 +14,12 @@ use Helpers\HttpResponseHelper;
 use Services\DatabaseService;
 
 use Models\Model;
+use Models\ModelList;
+
 $produitModel = new Model("produit", ["nom"=>"Test"]);
 $produitData = $produitModel->data();
+$modelList = new ModelList('produit', [["nom"=>'test'], ["nom"=>'test2']]);
+$modelData = $modelList->data();
 
 $bp = true;
 

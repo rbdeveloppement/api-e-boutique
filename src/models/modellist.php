@@ -1,4 +1,4 @@
-<?php
+<?php namespace Models;
 
 use Models\Model;
 
@@ -11,16 +11,20 @@ class ModelList {
   public function __construct(string $table, array $list){
     $this->table = $table;
     $this->pk = "Id_$this->table";
-    $this->items = [];
+    $this->item = [];
     
     foreach($list as $json){
-      array_push($item, new Model($table, $json));
+      array_push($this->item, new Model($table, $json));
     }
   }
   
   public function data(): array {
-    $data = (array) clone $this->item;
-    //TODO pas sur de ça x)
+    $data = [];
+    
+    foreach($this->item as $dt){
+      array_push($data, $dt->data());
+    }
+    
     return $data;
   }
   
