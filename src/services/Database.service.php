@@ -63,18 +63,6 @@ class DatabaseService {
   public function insertOrUpdate(array $body): ?array {
     $modelList = new ModelList($this->table, $body['items']);
     
-    $existingRowsListId = $modelList->idList();
-    
-    $where = "$this->pk IN (";
-    foreach($existingRowsListId as $id){
-        $where .= "?, ";
-    }
-    $where = substr($where, 0, -2) . ")";
-    
-    $rows = $this->selectWhere($where, $existingRowsListId, PDO::FETCH_ASSOC);
-    
-    $existingModelList = new Modellist($this->table, $rows);
-    
     $columns = "";
     $values = "";
     $valuesToBind = [];
@@ -102,7 +90,20 @@ class DatabaseService {
     
     $sql = "INSERT INTO $this->table $columns VALUES $values ON DUPLICATE KEY UPDATE $this->pk=$this->pk;";
     
-    $resp = $this->query($sql, $valuesToBind);
+    $this->query($sql, $valuesToBind);
+    
+    $existingRowsListId = $modelList->idList();
+    
+    $where = "$this->pk IN (";
+    foreach($existingRowsListId as $id){
+        $where .= "?, ";
+    }
+    $where = substr($where, 0, -2) . ")";
+    
+    $sql = "SELECT * FROM $this->table WHERE $where;";
+    
+    $resp = $this->query($sql, $existingRowsListId, PDO::FETCH_ASSOC);
+    
     if($resp->result){
         return $resp->statement->fetchAll(PDO::FETCH_CLASS);
     }
