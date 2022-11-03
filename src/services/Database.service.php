@@ -127,23 +127,7 @@ class DatabaseService {
     
     $this->query($sql, $valuesToBind);
     
-    $idList = $modelList->idList();
-    
-    $where = "$this->pk IN (";
-    foreach($idList as $id){
-        $where .= "?, ";
-    }
-    $where = substr($where, 0, -2) . ")";
-    
-    $sql = "SELECT * FROM $this->table WHERE $where;";
-    
-    $resp = $this->query($sql, $idList, PDO::FETCH_ASSOC);
-    
-    if($resp->result){
-        return $resp->statement->fetchAll(PDO::FETCH_CLASS);
-    }
-    
-    return null;
+    return $modelList->data();
   }
   
   public static function getTables() : array {
