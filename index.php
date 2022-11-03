@@ -26,7 +26,7 @@ $modelListeData = $modelList->data();
 $test = $modelList->idList();
 
 $request = HttpRequest::instance();
-// $tables = DatabaseService::getTables();
+$tables = DatabaseService::getTables();
 
 if ($_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] == 'init') {
     if (Initializer::start($request)) {
