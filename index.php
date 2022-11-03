@@ -46,19 +46,3 @@ $result = $controller->execute();
 if ($result) {
     HttpResponse::send(["data" => $result], 200);
 }
-// if(empty($request->route) || !in_array($request->route[0], $tables)){
-//     HttpResponse::exit();
-
-// }
-// Initializer::writeTableFile(true);
-// // $controller = new DatabaseController($request);
-// // $result = $controller->execute();
-// // HttpResponse::send(["method"=>$request->method, "route"=>$request->route]);
-
-// // $request = $_SERVER['REQUEST_METHOD'] . '/'. filter_var(trim($_SERVER['REQUEST_URI'], '/'), FILTER_SANITIZE_URL);
-
-// $controller = new DatabaseController($request);
-// $result = $controller -> execute ();
-// HttpResponse :: send ([ "data" => $result ]);
-// //  HttpRequest::instance();
-// // echo $request;
