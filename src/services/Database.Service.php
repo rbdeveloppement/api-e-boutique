@@ -9,6 +9,7 @@ class DatabaseService
 {
     public ?string $table;
     public string $pk;
+    
     public function __construct(?string $table = null)
     {
         $this->table = $table;
@@ -58,7 +59,7 @@ class DatabaseService
         $query_resp = $dbs->query("SELECT table_name FROM information_schema.tables
                                      WHERE table_schema = ?", ['e-boutique']);
         $rows = $query_resp->statement->fetchAll(PDO::FETCH_COLUMN);
-        $bp=true;
+       
         return $rows;
     }
 
