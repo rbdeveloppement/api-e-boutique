@@ -13,9 +13,6 @@ use Helpers\HttpRequestHelper;
 use Helpers\HttpResponseHelper;
 use Services\DatabaseService;
 
-use Models\Model;
-use Models\ModelList;
-
 $request = HttpRequestHelper::instance();
 $tables = DatabaseService::getTables();
 
