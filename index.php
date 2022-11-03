@@ -15,10 +15,15 @@ require_once 'autoload.php';
 use Controllers\DatabaseController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
+use Models\Model;
+use Models\ModelList;
 use Services\DatabaseService;
 
-
-
+$model= new Model("produit", ["nom"=>"une veste rouge"]);
+$articleData = $model->data();          //on execute la fonction data du model
+$modelList= new ModelList("produit", [["nom"=>"une veste bleue"], ["nom"=>"une veste verte"]]);
+$modelListeData = $modelList->data();
+$test = $modelList->idList();
 
 $request = HttpRequest::instance();
 // $tables = DatabaseService::getTables();
