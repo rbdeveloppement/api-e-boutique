@@ -63,8 +63,41 @@ class DatabaseService {
   public function insertOrUpdate(array $body): ?array {
     $modelList = new ModelList($this->table, $body['items']);
     
+    $idList = $modelList->idList();
+    
+    $where = "$this->pk IN (";
+    foreach($idList as $id){
+        $where .= "?, ";
+    }
+    $where = substr($where, 0, -2) . ")";
+    
+    $resp = $this->selectWhere($where, $idList, PDO::FETCH_ASSOC);
+    
+    foreach($body['items'] as $data){
+      $exist = false;
+      foreach($resp as &$arr){
+        if(!isset($arr[$this->pk]) || !isset($data[$this->pk])){
+          continue;
+        }
+        
+        if($arr[$this->pk] === $data[$this->pk]){
+          $exist = true;
+          foreach($data as $k => $v){
+            $arr[$k] = $v;
+          }
+          break;
+        }
+      }
+      if(!$exist){
+        array_push($resp, $data);
+      }
+    }
+    
+    $modelList = new ModelList($this->table, $resp);
+    
     $columns = "";
     $values = "";
+    $duplicateUpdate = "";
     $valuesToBind = [];
     
     foreach($modelList->data() as $data){
@@ -74,8 +107,10 @@ class DatabaseService {
             $columns .= "(";
             foreach(array_keys($data) as $key){
                 $columns .= "$key, ";
+                $duplicateUpdate .= "$key=VALUES($key), ";
             }
             $columns = substr($columns, 0, -2) . "), ";
+            $duplicateUpdate = substr($duplicateUpdate, 0, -2);
         }
         
         foreach($data as $k => $v){
@@ -88,21 +123,21 @@ class DatabaseService {
     $columns = substr($columns, 0, -2);
     $values = substr($values, 0, -2);
     
-    $sql = "INSERT INTO $this->table $columns VALUES $values ON DUPLICATE KEY UPDATE $this->pk=$this->pk;";
+    $sql = "INSERT INTO $this->table $columns VALUES $values ON DUPLICATE KEY UPDATE $duplicateUpdate;";
     
     $this->query($sql, $valuesToBind);
     
-    $existingRowsListId = $modelList->idList();
+    $idList = $modelList->idList();
     
     $where = "$this->pk IN (";
-    foreach($existingRowsListId as $id){
+    foreach($idList as $id){
         $where .= "?, ";
     }
     $where = substr($where, 0, -2) . ")";
     
     $sql = "SELECT * FROM $this->table WHERE $where;";
     
-    $resp = $this->query($sql, $existingRowsListId, PDO::FETCH_ASSOC);
+    $resp = $this->query($sql, $idList, PDO::FETCH_ASSOC);
     
     if($resp->result){
         return $resp->statement->fetchAll(PDO::FETCH_CLASS);
