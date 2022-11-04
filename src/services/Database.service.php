@@ -109,7 +109,7 @@ class DatabaseService {
                 $columns .= "$key, ";
                 $duplicateUpdate .= "$key=VALUES($key), ";
             }
-            $columns = substr($columns, 0, -2) . "), ";
+            $columns = substr($columns, 0, -2) . ")";
             $duplicateUpdate = substr($duplicateUpdate, 0, -2);
         }
         
@@ -117,7 +117,7 @@ class DatabaseService {
             $values .= "?, ";
             array_push($valuesToBind, $v);
         }
-        $values = substr($values, 0, -2) . ")";
+        $values = substr($values, 0, -2) . "), ";
     }
     
     $values = substr($values, 0, -2);
