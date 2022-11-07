@@ -7,6 +7,7 @@ class Compte_clientSchema {
 		'login' => ['type'=>'varchar(255)', 'nullable'=>'1', 'default'=>''],
 		'mot_de_passe' => ['type'=>'varchar(50)', 'nullable'=>'1', 'default'=>''],
 		'Id_client' => ['type'=>'varchar(255)', 'nullable'=>'1', 'default'=>''],
+		'is_deleted' => ['type'=>'tinyint(1)', 'nullable'=>'1', 'default'=>''],
 	];
 
 }

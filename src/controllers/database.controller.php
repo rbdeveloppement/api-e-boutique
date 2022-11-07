@@ -41,6 +41,20 @@ class DatabaseController {
     return $rows;
   }
   
+  public function patch(): ?array {
+    $dbs = new DatabaseService($this->table);
+    $rows = $dbs->softDelete($this->body);
+    
+    return $rows;
+  }
+  
+  public function delete(): ?array {
+    $dbs = new DatabaseService($this->table);
+    $rows = $dbs->hardDelete($this->body);
+    
+    return $rows;
+  }
+  
 }
 
 ?>

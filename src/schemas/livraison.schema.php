@@ -8,6 +8,7 @@ class LivraisonSchema {
 		'dates' => ['type'=>'date', 'nullable'=>'1', 'default'=>''],
 		'client' => ['type'=>'varchar(255)', 'nullable'=>'1', 'default'=>''],
 		'numero_d_envoi' => ['type'=>'varchar(255)', 'nullable'=>'1', 'default'=>''],
+		'is_deleted' => ['type'=>'tinyint(1)', 'nullable'=>'1', 'default'=>''],
 	];
 
 }

@@ -7,6 +7,7 @@ class PaiementSchema {
 		'dates' => ['type'=>'date', 'nullable'=>'1', 'default'=>''],
 		'libellé' => ['type'=>'varchar(50)', 'nullable'=>'1', 'default'=>''],
 		'Id_commande' => ['type'=>'int(11)', 'nullable'=>'1', 'default'=>''],
+		'is_deleted' => ['type'=>'tinyint(1)', 'nullable'=>'1', 'default'=>''],
 	];
 
 }

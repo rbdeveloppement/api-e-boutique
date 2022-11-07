@@ -7,6 +7,7 @@ class CommandeSchema {
 		'dates_achat' => ['type'=>'date', 'nullable'=>'1', 'default'=>''],
 		'Id_livraison' => ['type'=>'varchar(255)', 'nullable'=>'1', 'default'=>''],
 		'Id_client' => ['type'=>'varchar(255)', 'nullable'=>'1', 'default'=>''],
+		'is_deleted' => ['type'=>'tinyint(1)', 'nullable'=>'1', 'default'=>''],
 	];
 
 }

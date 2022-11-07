@@ -129,7 +129,61 @@ class DatabaseService {
     return $modelList->data();
   }
   
-  public static function getTables() : array {
+  public function softDelete(array $body): ?array {
+    $modelList = new ModelList($this->table, $body['items']);
+    
+    $idList = $modelList->idList();
+    $where = "";
+    
+    foreach($idList as $id){
+      $where .= '?, ';
+    }
+    
+    $where = substr($where, 0, -2);
+    
+    $sql = "UPDATE $this->table SET is_deleted=? WHERE $this->pk IN ($where);";
+    
+    $this->query($sql, [1, ...$idList]);
+    
+    $sql = "SELECT * FROM $this->table WHERE $this->pk IN ($where);";
+    
+    $resp = $this->query($sql, $idList);
+    if($resp->result){
+      $rows = $resp->statement->fetchAll(PDO::FETCH_ASSOC);
+      return $rows;
+    }
+    
+    return null;
+  }
+  
+  public function hardDelete(array $body): ?array {
+    $modelList = new ModelList($this->table, $body['items']);
+    
+    $idList = $modelList->idList();
+    $where = "";
+    
+    foreach($idList as $id){
+      $where .= '?, ';
+    }
+    
+    $where = substr($where, 0, -2);
+    
+    $sql = "DELETE FROM $this->table WHERE $this->pk IN ($where);";
+    
+    $this->query($sql, $idList);
+    
+    $sql = "SELECT * FROM $this->table WHERE $this->pk IN ($where);";
+    
+    $resp = $this->query($sql, $idList);
+    if($resp->result){
+      $rows = $resp->statement->fetchAll(PDO::FETCH_ASSOC);
+      return $rows;
+    }
+    
+    return null;
+  }
+  
+  public static function getTables(): array {
     $dbs = new DatabaseService();
     
     $response = $dbs->query('SELECT table_name FROM information_schema.tables WHERE table_schema=?', [$_ENV['db']['dbName']]);
@@ -138,7 +192,7 @@ class DatabaseService {
     return $rows;
   }
   
-  public function getSchema() : array {
+  public function getSchema(): array {
     $schema = [];
     $sql = "SHOW FULL COLUMNS FROM $this->table";
     
