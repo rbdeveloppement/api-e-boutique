@@ -28,7 +28,7 @@ class Initializer
     public static function writeTableFile(bool $isForce = false): array
     {
         $tables = DatabaseService::getTables();
-        $tableFile = "src/Schemas/Tables.php";
+        $tableFile = "src/Schemas/Table.php";
 
         if (file_exists($tableFile) && $isForce) {
 

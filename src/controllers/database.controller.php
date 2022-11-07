@@ -1,5 +1,6 @@
 <?php namespace Controllers;
 
+use ArrayAccess;
 use Services\DatabaseService;
 use Helpers\HttpRequest;
 
@@ -26,7 +27,7 @@ class DatabaseController {
   
 public function execute() : ?array
 {
- $result = self::get();
+ $result = $this->{$this->action}();
   return $result
  // return $this->($this->action)();
   
@@ -39,6 +40,14 @@ private function get() :?array
   $data = $dbs->selectWhere("$this->pk = ?", [$this->id]);
   return $data;
 }
+
+private function put() : array
+{
+  $dbs = new DatabaseService($this->table);
+  $rows = $dbs->insertOrUpdate($this->body);
+  return $rows;
+}
+
 }
 
 ?>
