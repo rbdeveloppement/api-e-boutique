@@ -47,7 +47,19 @@ private function put() : array
   $rows = $dbs->insertOrUpdate($this->body);
   return $rows;
 }
+public function patch(): ?array {     // le patch fait fait un soft deleted
+  $dbs = new DatabaseService($this->table);
+  $rows = $dbs->softDelete($this->body);
+  
+  return $rows;
+}
 
+public function delete(): ?array {   //fait un hard delete
+  $dbs = new DatabaseService($this->table);
+  $rows = $dbs->hardDelete($this->body);
+  
+  return $rows;
+}
 }
 
 ?>

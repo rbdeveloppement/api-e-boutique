@@ -157,14 +157,56 @@ class DatabaseService
 * renvoie les lignes deleted sous forme de tableau
 * si la mise à jour s'est bien passé (sinon null)
 */
-public function softDelete () : ? array
-{
-// ???
-$resp = $this->query($sql,$valuesToBind);
-if ($resp->result) {
-$rows = // ???
-return $rows ;
-}
-return null ;
-}
+public function softDelete(array $body): ?array {
+    $modelList = new ModelList($this->table, $body['items']);
+
+    $idList = $modelList->idList();
+    $where = "";
+
+    foreach($idList as $id){     // pour chaque Id dans la idList, on créer une chaine de characte de x "?, " (x = taille de la liste)
+      $where .= '?, ';
+    }
+
+    $where = substr($where, 0, -2);    //on retire les 2 dernier char (dans ce cas ci : ', ')
+
+    $sql = "UPDATE $this->table SET is_deleted=? WHERE $this->pk IN ($where);";       // on met a jour les lignes ou la condition (where) est remplie. 
+
+    $this->query($sql, [1, ...$idList]);   // on execute notre requete en ajoutant 1 au début car il représente le ? de is_deleted=?
+
+    $sql = "SELECT * FROM $this->table WHERE $this->pk IN ($where);";   // on defini $sql pour qu'il sélectionne la PK dans le $where (on récupére les lignes mise à jour juste avant)
+
+    $resp = $this->query($sql, $idList);  // on definit la variable "$resp" ce que nous retourne le query
+    if($resp->result){       //si le resp 
+      $rows = $resp->statement->fetchAll(PDO::FETCH_ASSOC);
+      return $rows;
+    }
+
+    return null;
+  }
+  public function hardDelete(array $body): ?array {
+    $modelList = new ModelList($this->table, $body['items']);
+    
+    $idList = $modelList->idList();
+    $where = "";
+    
+    foreach($idList as $id){
+      $where .= '?, ';
+    }
+    
+    $where = substr($where, 0, -2);
+    
+    $sql = "DELETE FROM $this->table WHERE $this->pk IN ($where);";
+    
+    $this->query($sql, $idList);
+    
+    $sql = "SELECT * FROM $this->table WHERE $this->pk IN ($where);";
+    
+    $resp = $this->query($sql, $idList);
+    if($resp->result){
+      $rows = $resp->statement->fetchAll(PDO::FETCH_ASSOC);
+      return $rows;
+    }
+    
+    return null;
+  }
 }
