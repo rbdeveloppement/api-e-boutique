@@ -69,10 +69,10 @@ class Initializer
                $colonnes = $dbs->getSchema();
                 
                foreach($colonnes as $colonne){
-                $Null = ($colonne['Null']== "NO") ? ('') : ("1");     //ternaire: declaration d'une variable = on recupère les donnees == "condition"  ?  (return1) ou (return2)
+                $Null = ($colonne->Null== "NO") ? ('') : ("1");     //ternaire: declaration d'une variable = on recupère les donnees == "condition"  ?  (return1) ou (return2)
                 
                 
-                    $fileContent.="\t\t'".$colonne['Field']."'=> ['type' =>'".$colonne['Type']."' ,'nullable' =>'".$Null."' ,'default' => '".$colonne['Default']."'],\r\n";
+                    $fileContent.="\t\t'".$colonne->Field."'=> ['type' =>'".$colonne->Type."' ,'nullable' =>'".$Null."' ,'default' => '".$colonne->Default."'],\r\n";
                }
 
                 

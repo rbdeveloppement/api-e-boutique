@@ -34,7 +34,7 @@ if ($_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] == 'i
 
 if (!empty($request->route)) {
     $const = strtoupper($request->route[0]);
-    $key = "Schemas\Table::$const";
+    $key = "Schemas\Tables::$const";
     if (!defined($key)) {
         HttpResponse::exit(404);
     }
