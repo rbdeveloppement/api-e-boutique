@@ -19,14 +19,14 @@ use Models\Model;
 use Models\ModelList;
 use Services\DatabaseService;
 
-$model= new Model("produit", ["nom"=>"une veste rouge"]);
-$articleData = $model->data();          //on execute la fonction data du model
-$modelList= new ModelList("produit", [["nom"=>"une veste bleue"], ["nom"=>"une veste verte"]]);
-$modelListeData = $modelList->data();
-$test = $modelList->idList();
+// $model= new Model("produit", ["nom"=>"une veste rouge"]);
+// $articleData = $model->data();          //on execute la fonction data du model
+// $modelList= new ModelList("produit", [["nom"=>"une veste bleue"], ["nom"=>"une veste verte"]]);
+// $modelListeData = $modelList->data();
+// $test = $modelList->idList();
 
 $request = HttpRequest::instance();
-// $tables = DatabaseService::getTables();
+ $tables = DatabaseService::getTables();
 
 if ($_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] == 'init') {
     if (Initializer::start($request)) {
@@ -39,7 +39,7 @@ if ($_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] == 'i
 
 if (!empty($request->route)) {
     $const = strtoupper($request->route[0]);
-    $key = "Schemas\Table::$const";
+    $key = "Schemas\Tables::$const";
     if (!defined($key)) {
         HttpResponse::exit(404);
     }

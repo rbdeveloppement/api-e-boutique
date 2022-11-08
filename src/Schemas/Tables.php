@@ -1,6 +1,6 @@
 <?php namespace Schemas ;
 
-class Table{
+class Tables{
 
 	const AJOUTE_FAV = 'ajoute_fav';
 	const CATEGORIE = 'categorie';

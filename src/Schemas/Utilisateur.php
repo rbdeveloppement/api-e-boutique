@@ -10,5 +10,6 @@ class Utilisateur{
 		'telephone'=> ['type' =>'varchar(50)' ,'nullable' =>'1' ,'default' => ''],
 		'mail'=> ['type' =>'varchar(50)' ,'nullable' =>'1' ,'default' => ''],
 		'Id_role'=> ['type' =>'varchar(255)' ,'nullable' =>'1' ,'default' => ''],
+		'is_deleted'=> ['type' =>'tinyint(1)' ,'nullable' =>'1' ,'default' => ''],
 	];
 }
