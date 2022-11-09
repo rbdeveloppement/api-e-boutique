@@ -8,6 +8,17 @@ $_ENV['env'] = $env;
 
 require_once 'autoload.php';
 
+
+use Helpers\TokenHelper;
+
+$tokenFromDataArray = TokenHelper::create(['id'=>'5', 'name'=>'Bryan']);
+$encoded = $tokenFromDataArray->encode;
+$tokenFromEncodedString = TokenHelper::create($encoded);
+$decoded = $tokenFromEncodedString->decode;
+
+$bp = true;
+
+
 use Controllers\DatabaseController;
 use Helpers\HttpRequestHelper;
 use Helpers\HttpResponseHelper;
