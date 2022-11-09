@@ -12,9 +12,10 @@ require_once 'autoload.php';
 use Helpers\TokenHelper;
 
 $tokenFromDataArray = TokenHelper::create(['id'=>'5', 'name'=>'Bryan']);
-$encoded = $tokenFromDataArray->encode;
+$encoded = $tokenFromDataArray->encoded;
 $tokenFromEncodedString = TokenHelper::create($encoded);
-$decoded = $tokenFromEncodedString->decode;
+$decoded = $tokenFromEncodedString->decoded;
+$test = $tokenFromEncodedString->isValid();
 
 $bp = true;
 

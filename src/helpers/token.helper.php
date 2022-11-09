@@ -41,7 +41,7 @@ class TokenHelper {
     $payload = base64_encode(json_encode($this->decoded));
     $signature = ltrim(password_hash($payload, PASSWORD_BCRYPT, ['cost'=> 8]), self::$prefix);
     
-    $this->encode = "$payload." . base64_encode($signature);
+    $this->encoded = "$payload." . base64_encode($signature);
   }
   
   private function decode(string $encoded): void {
@@ -54,7 +54,7 @@ class TokenHelper {
     $verified = password_verify($args[0], $signature);
     
     if($verified){
-      $this->decoded = json_decode(base64_decode($args[0], true));
+      $this->decoded = json_decode(base64_decode($args[0]), true);
     }
   }
   
