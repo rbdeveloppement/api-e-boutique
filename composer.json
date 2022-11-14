@@ -1,0 +1,17 @@
+{
+    "name": "pc/e-boutique",
+    "autoload": {
+        "psr-4": {
+            "Pc\\EBoutique\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "rbdeveloppement",
+            "email": "rbdeveloppement@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.6"
+    }
+}

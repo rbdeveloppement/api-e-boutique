@@ -18,6 +18,7 @@ use Helpers\HttpResponse;
 use Models\Model;
 use Models\ModelList;
 use Services\DatabaseService;
+use Services\MailerService;
 
 //tests
 // $model= new Model("produit", ["nom"=>"une veste rouge"]);
@@ -26,9 +27,21 @@ use Services\DatabaseService;
 // $modelListeData = $modelList->data();
 // $test = $modelList->idList();
 //fin de test
+//test mailer
+$newMail = new MailerService();
+$newMail->send([
+    "fromAddress" => ["newsletter@monblog.com","newsletter monblog.com"],
+    "destAddresses" => ["rbdeveloppement12@gmail.com"],
+    "replyAddress" => ["info@monblog.com","information monblog.com"],
+    "subject" => "Newsletter monblog.com",
+    "body" => "this is the HTML message send by <b>monblog.com</b>",
+    "altBody" => "this is the plain text message for non-HTML mail client "]);
 
+
+//fin test mailer
 $request = HttpRequest::instance();
 $tables = DatabaseService::getTables();
+
 
 if ($_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] == 'init') {
     if (Initializer::start($request)) {

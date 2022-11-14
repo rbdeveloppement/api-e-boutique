@@ -60,6 +60,7 @@ public function delete(): ?array {   //fait un hard delete
   
   return $rows;
 }
+
 }
 
 ?>

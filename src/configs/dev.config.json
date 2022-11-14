@@ -5,5 +5,15 @@
         "dbName": "e-boutique",
         "user": "root",
         "pass": ""
-    }
+    },
+    "mailer": {
+        "main": {
+          "host": "smtp.gmail.com",
+          "port": 587,
+          "auth": true,
+          "secure": "tsl",
+          "user": "rbdeveloppement12@gmail.com",
+          "pass": "mfroyuzhniicibdm"
+        }
+      }
 }

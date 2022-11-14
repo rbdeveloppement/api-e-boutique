@@ -17,7 +17,7 @@ class AutoLoader {
         return require_once $toolsPath;
       }
       
-      return false;
+      return require_once $class;
     });
   }
   

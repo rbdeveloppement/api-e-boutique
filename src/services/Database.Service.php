@@ -117,7 +117,7 @@ class DatabaseService
                 array_push($resp, $data); // si ça n'existe pas dans le resp, on ajoute au tableau
             }
         }
-        $modelList = new ModelList($this->table, $resp); //npuvelle instance modellist et on ajoute la resp à la table de l'instance en cour
+        $modelList = new ModelList($this->table, $resp); //nouvelle instance modellist et on ajoute la resp à la table de l'instance en cour
         $columns = "";
         $values = "";
         $duplicateUpdate = "";      //on initialise des données
