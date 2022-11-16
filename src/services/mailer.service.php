@@ -8,15 +8,15 @@ class MailerService{
 
     public function __construct($profil = "main")
     {
-        $config = $_ENV["config"]->mailer->{$profil};
+        $config = $_ENV["mailer"][$profil];
         $mailer = new PHPMailer(true);
         $mailer->isSMTP();
-        $mailer->Host = $config->host;
-        $mailer->Port = $config->port;
-        $mailer->SMTPAuth = $config->auth;
-        $mailer->SMTPSecure = $config->secure;
-        $mailer->Username = $config->user;
-        $mailer->Password = $config->pass;
+        $mailer->Host = $config["host"];
+        $mailer->Port = $config["port"];
+        $mailer->SMTPAuth = $config["auth"];
+        $mailer->SMTPSecure = $config["secure"];
+        $mailer->Username = $config["user"];
+        $mailer->Password = $config["pass"];
         $mailer->CharSet = 'UTF-8';
         $mailer->SMTPOptions = array(
             'ssl' => array(

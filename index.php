@@ -7,6 +7,7 @@ $_ENV = json_decode(file_get_contents("src/Configs/" . $env . ".config.json"), t
 $_ENV['env'] = $env;
 
 require_once 'autoload.php';
+require_once 'vendor/autoload.php';
 
 // use Helpers\HttpResponse;
 // $data="OK";
